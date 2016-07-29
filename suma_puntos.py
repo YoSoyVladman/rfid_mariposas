@@ -109,15 +109,15 @@ if __name__ == '__main__':
                 #print rv.status_code
                 ##########
                 if rv.status_code == requests.codes.ok:
-                	logger.info('Encontrado')
+                	#logger.info('Encontrado')
                 	encender_led()
-                    sumar_puntos(rfid,P)
+                    	sumar_puntos(rfid,P)
                 else:
                 	logger.error('NO ENCONTRADO')
-                    encender_error()
+                    	encender_error()
                 # Read data from RFID reader
                 ############
                 
         except Exception, e:
-            logger.error('ERROR %s',e)
+            #logger.error('ERROR %s',e)
             continue
