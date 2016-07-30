@@ -92,7 +92,7 @@ if __name__ == '__main__':
                 if r.status_code == requests.codes.ok:
                     ########### EXISTE el USUARIO ########
                     json = r.json()
-                    hi = json.get('historial')
+                    h = json.get('historial')
                     ##### SI el historial es Vacio, no Ha ingresado 
                     if not h:
                         print 'Permited'
