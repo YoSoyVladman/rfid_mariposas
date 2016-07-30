@@ -30,7 +30,7 @@ rojo = [ (255,0,0) ] * numLEDs
 Z = 1
 E = 1
 ##### PUNTOS #######
-P = 10
+P = 1
 ############
 
 
@@ -40,15 +40,6 @@ def encender_led():
     cliente.put_pixels(blanco)
     time.sleep(.5)
     cliente.put_pixels(negro)
-
-
-def encender_error():
-    cliente.put_pixels(negro)
-    time.sleep(.1)
-    cliente.put_pixels(rojo)
-    time.sleep(	.5)
-    cliente.put_pixels(negro)
-
 
 def sumar_puntos(rfid,puntos):
     #encender()
