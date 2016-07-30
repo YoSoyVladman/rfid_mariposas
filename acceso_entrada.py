@@ -42,7 +42,7 @@ def encender_error():
     cliente.put_pixels(negro)
     time.sleep(.1)
     cliente.put_pixels(rojo)
-    time.sleep(1.5)
+    time.sleep(.5)
     cliente.put_pixels(negro)
 
 if __name__ == '__main__':
@@ -93,7 +93,7 @@ if __name__ == '__main__':
                     ########### EXISTE el USUARIO ########
                     json = r.json()
                     h = json.get('historial')
-                    ##### SI el historial es Vacio, no Ha ingresado 
+                    ##### SI el historial es Vacio, no Ha ingresado
                     if not h:
                         print 'Permited'
                         encender_led()

@@ -35,14 +35,7 @@ def encender_led():
     cliente.put_pixels(negro)
     time.sleep(.1)
     cliente.put_pixels(blanco)
-    time.sleep(1.5)
-    cliente.put_pixels(negro)
-
-def encender_error():
-    cliente.put_pixels(negro)
-    time.sleep(.1)
-    cliente.put_pixels(rojo)
-    time.sleep(1.5)
+    time.sleep(.5)
     cliente.put_pixels(negro)
 
 if __name__ == '__main__':
