@@ -95,7 +95,7 @@ if __name__ == '__main__':
                             data_v = {'rfid':rfid,'experiencia':E,'zona':Z}
                             try:
                                 rv  = requests.get(URL + url_v, params = data_v)
-                                
+
                             except requests.ConnectionError as e:
                                 logger.error('ERROR %s',e)
                                 pass
@@ -131,9 +131,9 @@ if __name__ == '__main__':
                     logger.error('ERROR %s',e)
                     pass
 
-                else:
-                    ########### NO EXISTE el USUARIO ########
-                    print 'NotFound'
+            else:
+                ########### NO EXISTE el USUARIO ########
+                print 'NotFound'
 
         except Exception, e:
             #logger.error('ERROR %s',e)

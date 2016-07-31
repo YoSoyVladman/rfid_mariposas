@@ -119,9 +119,9 @@ if __name__ == '__main__':
                                 logger.error('ERROR %s',e)
                                 pass
 
-                        else:
-                            print 'NotPermited'
-                            encender_error()
+                    else:
+                        print 'NotPermited'
+                        encender_error()
 
                 except requests.ConnectionError as e:
                     logger.error('ERROR %s',e)
@@ -141,10 +141,10 @@ if __name__ == '__main__':
 
 
 
-                else:
-                    ########### NO EXISTE el USUARIO ########
-                    print 'NotFound'
-                    encender_error()
+            else:
+                ########### NO EXISTE el USUARIO ########
+                print 'NotFound'
+                encender_error()
 
 
         except Exception, e:
