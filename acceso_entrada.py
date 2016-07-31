@@ -100,6 +100,7 @@ if __name__ == '__main__':
                             encender_led()
                             url_v = 'visitante'
                             data_v = {'rfid':rfid,'experiencia':E,'zona':Z}
+
                             try:
                                 rv  = requests.get(URL + url_v, params = data_v)
 
@@ -119,8 +120,13 @@ if __name__ == '__main__':
                                 logger.error('ERROR %s',e)
                                 pass
 
+                        else:
+                            print 'NotPermited'
+                            encender_error()
+
                     else:
-                        print 'NotPermited'
+                        ########### NO EXISTE el USUARIO ########
+                        print 'NotFound'
                         encender_error()
 
                 except requests.ConnectionError as e:
@@ -138,13 +144,6 @@ if __name__ == '__main__':
                 except requests.Timeout as e:
                     logger.error('ERROR %s',e)
                     pass
-
-
-
-            else:
-                ########### NO EXISTE el USUARIO ########
-                print 'NotFound'
-                encender_error()
 
 
         except Exception, e:
