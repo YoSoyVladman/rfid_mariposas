@@ -100,7 +100,25 @@ if __name__ == '__main__':
                             encender_led()
                             url_v = 'visitante'
                             data_v = {'rfid':rfid,'experiencia':E,'zona':Z}
-                            rv  = requests.get(URL + url_v, params = data_v)
+                            try:
+                                rv  = requests.get(URL + url_v, params = data_v)
+
+                            except requests.ConnectionError as e:
+                                logger.error('ERROR %s',e)
+                                pass
+                            except requests.HTTPError as e:
+                                logger.error('ERROR %s',e)
+                                pass
+                            except requests.ConnectTimeout as e:
+                                logger.error('ERROR %s',e)
+                                pass
+                            except requests.ReadTimeout as e:
+                                logger.error('ERROR %s',e)
+                                pass
+                            except requests.Timeout as e:
+                                logger.error('ERROR %s',e)
+                                pass
+
                         else:
                             print 'NotPermited'
                             encender_error()
@@ -108,6 +126,19 @@ if __name__ == '__main__':
                 except requests.ConnectionError as e:
                     logger.error('ERROR %s',e)
                     pass
+                except requests.HTTPError as e:
+                    logger.error('ERROR %s',e)
+                    pass
+                except requests.ConnectTimeout as e:
+                    logger.error('ERROR %s',e)
+                    pass
+                except requests.ReadTimeout as e:
+                    logger.error('ERROR %s',e)
+                    pass
+                except requests.Timeout as e:
+                    logger.error('ERROR %s',e)
+                    pass
+
 
 
                 else:

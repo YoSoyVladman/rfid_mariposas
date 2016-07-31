@@ -82,19 +82,55 @@ if __name__ == '__main__':
                 url_h = 'historial'
                 data = { 'rfid':rfid }
                 r = requests.get(URL + url_h, params = data)
-                if r.status_code == requests.codes.ok:
-                    ########### EXISTE el USUARIO ########
-                    json = r.json()
-                    h = json.get('historial')
-                    ##### SI el historial es Vacio, no Ha ingresado
-                    if(str(E) not in h):
-                        print 'Entraste zona ' + str(E)
-                        encender_led()
-                        url_v = 'visitante'
-                        data_v = {'rfid':rfid,'experiencia':E,'zona':Z}
-                        rv  = requests.get(URL + url_v, params = data_v)
-                    else:
-                        print 'Ya entraste'
+                try:
+                    if r.status_code == requests.codes.ok:
+                        ########### EXISTE el USUARIO ########
+                        json = r.json()
+                        h = json.get('historial')
+                        ##### SI el historial es Vacio, no Ha ingresado
+                        if(str(E) not in h):
+                            print 'Entraste zona ' + str(E)
+                            encender_led()
+                            url_v = 'visitante'
+                            data_v = {'rfid':rfid,'experiencia':E,'zona':Z}
+                            try:
+                                rv  = requests.get(URL + url_v, params = data_v)
+                                
+                            except requests.ConnectionError as e:
+                                logger.error('ERROR %s',e)
+                                pass
+                            except requests.HTTPError as e:
+                                logger.error('ERROR %s',e)
+                                pass
+                            except requests.ConnectTimeout as e:
+                                logger.error('ERROR %s',e)
+                                pass
+                            except requests.ReadTimeout as e:
+                                logger.error('ERROR %s',e)
+                                pass
+                            except requests.Timeout as e:
+                                logger.error('ERROR %s',e)
+                                pass
+
+                        else:
+                            print 'Ya entraste'
+
+                except requests.ConnectionError as e:
+                    logger.error('ERROR %s',e)
+                    pass
+                except requests.HTTPError as e:
+                    logger.error('ERROR %s',e)
+                    pass
+                except requests.ConnectTimeout as e:
+                    logger.error('ERROR %s',e)
+                    pass
+                except requests.ReadTimeout as e:
+                    logger.error('ERROR %s',e)
+                    pass
+                except requests.Timeout as e:
+                    logger.error('ERROR %s',e)
+                    pass
+
                 else:
                     ########### NO EXISTE el USUARIO ########
                     print 'NotFound'
