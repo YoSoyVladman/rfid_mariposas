@@ -88,21 +88,28 @@ if __name__ == '__main__':
                 ######### Get Historial ########
                 url_h = 'historial'
                 data = { 'rfid':rfid }
-                r = requests.get(URL + url_h, params = data)
-                if r.status_code == requests.codes.ok:
-                    ########### EXISTE el USUARIO ########
-                    json = r.json()
-                    h = json.get('historial')
-                    ##### SI el historial es Vacio, no Ha ingresado
-                    if not h:
-                        print 'Permited'
-                        encender_led()
-                        url_v = 'visitante'
-                        data_v = {'rfid':rfid,'experiencia':E,'zona':Z}
-                        rv  = requests.get(URL + url_v, params = data_v)
-                    else:
-                        print 'NotPermited'
-                        encender_error()
+                try:
+                    r = requests.get(URL + url_h, params = data)
+                    if r.status_code == requests.codes.ok:
+                        ########### EXISTE el USUARIO ########
+                        json = r.json()
+                        h = json.get('historial')
+                        ##### SI el historial es Vacio, no Ha ingresado
+                        if not h:
+                            print 'Permited'
+                            encender_led()
+                            url_v = 'visitante'
+                            data_v = {'rfid':rfid,'experiencia':E,'zona':Z}
+                            rv  = requests.get(URL + url_v, params = data_v)
+                        else:
+                            print 'NotPermited'
+                            encender_error()
+
+                except requests.ConnectionError as e:
+                    logger.error('ERROR %s',e)
+                    pass
+
+
                 else:
                     ########### NO EXISTE el USUARIO ########
                     print 'NotFound'
