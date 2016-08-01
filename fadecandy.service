@@ -1,0 +1,11 @@
+[Unit]
+Description=Levanta el Servidor FadeCandy
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/fcserver
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

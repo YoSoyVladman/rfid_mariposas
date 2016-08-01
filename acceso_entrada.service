@@ -1,0 +1,12 @@
+
+[Unit]
+Description=Levanta el AccesoEntrada
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python /home/pi/Vladman/rfid_mariposas/acceso_entrada.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
