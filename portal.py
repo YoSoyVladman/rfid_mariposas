@@ -41,10 +41,10 @@ def encender_led():
 if __name__ == '__main__':
     r = readers()
     #print 'lectores disponibles', r
-    logger.info('Lectores Disponibles %s: ',r)
+    #logger.info('Lectores Disponibles %s: ',r)
     lector = r[0]
     #print 'Usando :', lector
-    logger.info('Usando: %s',lector)
+    #logger.info('Usando: %s',lector)
 
     while(1):
         try:
@@ -89,7 +89,7 @@ if __name__ == '__main__':
                         h = json.get('historial')
                         ##### SI el historial es Vacio, no Ha ingresado
                         if(str(E) not in h):
-                            print 'Entraste zona ' + str(E)
+                            print 'Entraste zona '
                             encender_led()
                             url_v = 'visitante'
                             data_v = {'rfid':rfid,'experiencia':E,'zona':Z}
