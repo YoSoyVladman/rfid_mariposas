@@ -27,8 +27,8 @@ negro = [ (0,0,0) ] * numLEDs
 blanco = [ (255,255,255) ] * numLEDs
 rojo = [ (255,0,0) ] * numLEDs
 ####### ID DE LA EXPERIENCIA ########
-Z = 1
-E = 1
+Z = 6
+E = 26
 ##### PUNTOS #######
 P = 1
 ############
@@ -45,19 +45,33 @@ def sumar_puntos(rfid,puntos):
     #encender()
     url = 'http://papalote.cocoplan.mx/v0/agregar_puntos'
     data = {'rfid':rfid,'puntos':puntos,'zona':Z,'experiencia':E}
-    r = requests.post(url,data)
-    #print r
-    #logger.info('Sumando %s',r)
+    try:
+        r = requests.post(url,data)
+    except requests.ConnectionError as e:
+        logger.error('ERROR %s',e)
+        pass
+    except requests.HTTPError as e:
+        logger.error('ERROR %s',e)
+        pass
+    except requests.ConnectTimeout as e:
+        logger.error('ERROR %s',e)
+        pass
+    except requests.ReadTimeout as e:
+        logger.error('ERROR %s',e)
+        pass
+    except requests.Timeout as e:
+        logger.error('ERROR %s',e)
+        pass
 
 
 
 if __name__ == '__main__':
     r = readers()
     #print 'lectores disponibles', r
-    logger.info('Lectores Disponibles %s: ',r)
+    #logger.info('Lectores Disponibles %s: ',r)
     lector = r[0]
     #print 'Usando :', lector
-    logger.info('Usando: %s',lector)
+    #logger.info('Usando: %s',lector)
 
     while(1):
         try:
@@ -91,23 +105,43 @@ if __name__ == '__main__':
                 #print 'decimal',decimal
                 rfid = decimal
                 print rfid
-                ##################
-                ###### GET #####
-                url_v = 'http://papalote.cocoplan.mx/v0/visitante'
-                data_v = {'rfid':rfid,'experiencia':E,'zona':Z}
-                rv  = requests.get(url_v, params = data_v)
-                #print rv
-                #print rv.status_code
-                ##########
-                if rv.status_code == requests.codes.ok:
-                	#logger.info('Encontrado')
-                	encender_led()
-                    	sumar_puntos(rfid,P)
-                else:
-                	logger.error('NO ENCONTRADO')
-                    	#encender_error()
-                # Read data from RFID reader
-                ############
+                ######### Get Historial ########
+                url_h = 'historial'
+                data = { 'rfid':rfid }
+                try:
+                    r = requests.get(URL + url_h, params = data)
+                    if r.status_code == requests.codes.ok:
+                        ########### EXISTE el USUARIO ########
+                        json = r.json()
+                        h = json.get('historial')
+                        ##### SI el historial es Vacio, no Ha ingresado
+                        if(str(E) not in h):
+                            print 'Entraste experiencia'
+                            encender_led()
+                            sumar_puntos(rfid,P)
+
+                        else:
+                            print 'Ya entraste'
+
+                    else:
+                        ########### NO EXISTE el USUARIO ########
+                        print 'NotFound'
+
+                except requests.ConnectionError as e:
+                    logger.error('ERROR %s',e)
+                    pass
+                except requests.HTTPError as e:
+                    logger.error('ERROR %s',e)
+                    pass
+                except requests.ConnectTimeout as e:
+                    logger.error('ERROR %s',e)
+                    pass
+                except requests.ReadTimeout as e:
+                    logger.error('ERROR %s',e)
+                    pass
+                except requests.Timeout as e:
+                    logger.error('ERROR %s',e)
+                    pass
 
         except Exception, e:
             #logger.error('ERROR %s',e)
