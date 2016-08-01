@@ -32,6 +32,7 @@ E = 26
 ##### PUNTOS #######
 P = 1
 ############
+URL = 'http://papalote.cocoplan.mx/v0/'
 
 
 def encender_led():
@@ -43,10 +44,11 @@ def encender_led():
 
 def sumar_puntos(rfid,puntos):
     #encender()
-    url = 'http://papalote.cocoplan.mx/v0/agregar_puntos'
+    url = 'agregar_puntos'
     data = {'rfid':rfid,'puntos':puntos,'zona':Z,'experiencia':E}
     try:
-        r = requests.post(url,data)
+        r = requests.post(URL + url,data)
+        
     except requests.ConnectionError as e:
         logger.error('ERROR %s',e)
         pass
