@@ -27,8 +27,8 @@ negro = [ (0,0,0) ] * numLEDs
 blanco = [ (255,255,255) ] * numLEDs
 rojo = [ (255,0,0) ] * numLEDs
 ####### ID DE LA EXPERIENCIA ########
-Z = 1
-E = 2
+Z = 3
+E = 4
 URL = 'http://papalote.cocoplan.mx/v0/'
 
 def encender_led():
