@@ -81,8 +81,8 @@ if __name__ == '__main__':
                 ######### Get Historial ########
                 url_h = 'historial'
                 data = { 'rfid':rfid }
-                r = requests.get(URL + url_h, params = data)
                 try:
+                    r = requests.get(URL + url_h, params = data)
                     if r.status_code == requests.codes.ok:
                         ########### EXISTE el USUARIO ########
                         json = r.json()
@@ -115,6 +115,10 @@ if __name__ == '__main__':
                         else:
                             print 'Ya entraste'
 
+                    else:
+                        ########### NO EXISTE el USUARIO ########
+                        print 'NotFound'
+
                 except requests.ConnectionError as e:
                     logger.error('ERROR %s',e)
                     pass
@@ -130,10 +134,6 @@ if __name__ == '__main__':
                 except requests.Timeout as e:
                     logger.error('ERROR %s',e)
                     pass
-
-            else:
-                ########### NO EXISTE el USUARIO ########
-                print 'NotFound'
 
         except Exception, e:
             #logger.error('ERROR %s',e)
