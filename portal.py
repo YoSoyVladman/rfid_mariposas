@@ -26,6 +26,7 @@ cliente = opc.Client('localhost:7890')
 negro = [ (0,0,0) ] * numLEDs
 blanco = [ (255,255,255) ] * numLEDs
 rojo = [ (255,0,0) ] * numLEDs
+azul = [ (0,0,255) ] * numLEDs
 ####### ID DE LA EXPERIENCIA ########
 Z = 3
 E = 4
@@ -37,6 +38,15 @@ def encender_led():
     cliente.put_pixels(blanco)
     time.sleep(.5)
     cliente.put_pixels(negro)
+
+
+def encender_azul():
+    cliente.put_pixels(negro)
+    time.sleep(.1)
+    cliente.put_pixels(azul)
+    time.sleep(.5)
+    cliente.put_pixels(negro)
+
 
 if __name__ == '__main__':
     r = readers()
@@ -78,60 +88,37 @@ if __name__ == '__main__':
                 #print 'decimal',decimal
                 rfid = decimal
                 print rfid
-                ######### Get Historial ########
-                url_h = 'historial'
-                data = { 'rfid':rfid }
+                url_v = 'visitante'
+                data_v = {'rfid':rfid,'experiencia':E,'zona':Z}
+                
                 try:
-                    r = requests.get(URL + url_h, params = data)
+                    r = requests.get(URL + url_v, params = data_v)
                     if r.status_code == requests.codes.ok:
                         ########### EXISTE el USUARIO ########
-                        json = r.json()
-                        h = json.get('historial')
-                        ##### SI el historial es Vacio, no Ha ingresado
-                        if(str(E) not in h):
-                            print 'Entraste zona '
-                            encender_led()
-                            url_v = 'visitante'
-                            data_v = {'rfid':rfid,'experiencia':E,'zona':Z}
-                            try:
-                                rv  = requests.get(URL + url_v, params = data_v)
-
-                            except requests.ConnectionError as e:
-                                logger.error('ERROR %s',e)
-                                pass
-                            except requests.HTTPError as e:
-                                logger.error('ERROR %s',e)
-                                pass
-                            except requests.ConnectTimeout as e:
-                                logger.error('ERROR %s',e)
-                                pass
-                            except requests.ReadTimeout as e:
-                                logger.error('ERROR %s',e)
-                                pass
-                            except requests.Timeout as e:
-                                logger.error('ERROR %s',e)
-                                pass
-
-                        else:
-                            print 'Ya entraste'
+                        encender_led()
 
                     else:
                         ########### NO EXISTE el USUARIO ########
                         print 'NotFound'
 
                 except requests.ConnectionError as e:
+                    encender_azul()
                     logger.error('ERROR %s',e)
                     pass
                 except requests.HTTPError as e:
+                    encender_azul()
                     logger.error('ERROR %s',e)
                     pass
                 except requests.ConnectTimeout as e:
+                    encender_azul()
                     logger.error('ERROR %s',e)
                     pass
                 except requests.ReadTimeout as e:
+                    encender_azul()
                     logger.error('ERROR %s',e)
                     pass
                 except requests.Timeout as e:
+                    encender_azul()
                     logger.error('ERROR %s',e)
                     pass
 

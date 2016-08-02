@@ -27,6 +27,8 @@ cliente = opc.Client('localhost:7890')
 negro = [ (0,0,0) ] * numLEDs
 blanco = [ (255,255,255) ] * numLEDs
 rojo = [ (255,0,0) ] * numLEDs
+azul = [ (0,0,255) ] * numLEDs
+
 ####### ID DE LA EXPERIENCIA ########
 Z = 1
 E = 2
@@ -54,6 +56,14 @@ def encender_error():
     cliente.put_pixels(rojo)
     time.sleep(.5)
     cliente.put_pixels(negro)
+
+def encender_azul():
+    cliente.put_pixels(negro)
+    time.sleep(.1)
+    cliente.put_pixels(azul)
+    time.sleep(.5)
+    cliente.put_pixels(negro)
+    
 
 if __name__ == '__main__':
     r = readers()
@@ -116,18 +126,23 @@ if __name__ == '__main__':
                                 url = j.get('url_perfil')
                                 osc_mensaje(url)
                             except requests.ConnectionError as e:
+                                encender_azul()
                                 logger.error('ERROR %s',e)
                                 pass
                             except requests.HTTPError as e:
+                                encender_azul()
                                 logger.error('ERROR %s',e)
                                 pass
                             except requests.ConnectTimeout as e:
+                                encender_azul()
                                 logger.error('ERROR %s',e)
                                 pass
                             except requests.ReadTimeout as e:
+                                encender_azul()
                                 logger.error('ERROR %s',e)
                                 pass
                             except requests.Timeout as e:
+                                encender_azul()
                                 logger.error('ERROR %s',e)
                                 pass
 
@@ -141,18 +156,23 @@ if __name__ == '__main__':
                         encender_error()
 
                 except requests.ConnectionError as e:
+                    encender_azul()
                     logger.error('ERROR %s',e)
                     pass
                 except requests.HTTPError as e:
+                    encender_azul()
                     logger.error('ERROR %s',e)
                     pass
                 except requests.ConnectTimeout as e:
+                    encender_azul()
                     logger.error('ERROR %s',e)
                     pass
                 except requests.ReadTimeout as e:
+                    encender_azul()
                     logger.error('ERROR %s',e)
                     pass
                 except requests.Timeout as e:
+                    encender_azul()
                     logger.error('ERROR %s',e)
                     pass
 
