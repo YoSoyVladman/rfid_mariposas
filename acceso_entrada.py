@@ -3,6 +3,7 @@ import requests
 from smartcard.System import readers
 from smartcard.util import toHexString
 import opc
+import OSC
 ######### LOG #########
 import logging
 #######################
@@ -30,6 +31,15 @@ rojo = [ (255,0,0) ] * numLEDs
 Z = 1
 E = 2
 URL = 'http://papalote.cocoplan.mx/v0/'
+
+def osc_mensaje(m):
+    ######OSCClient#########
+    c = OSC.OSCClient()
+    c.connect(('127.0.0.1', 57120))   # localhost, port 57120
+    oscmsg = OSC.OSCMessage()
+    oscmsg.setAddress("/login")
+    oscmsg.append(m)
+    c.send(oscmsg)
 
 def encender_led():
     cliente.put_pixels(negro)
@@ -100,10 +110,11 @@ if __name__ == '__main__':
                             encender_led()
                             url_v = 'visitante'
                             data_v = {'rfid':rfid,'experiencia':E,'zona':Z}
-
                             try:
                                 rv  = requests.get(URL + url_v, params = data_v)
-
+                                j = rv.json()
+                                url = j.get('url_perfil')
+                                osc_mensaje(url)
                             except requests.ConnectionError as e:
                                 logger.error('ERROR %s',e)
                                 pass
