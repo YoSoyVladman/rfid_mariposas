@@ -37,7 +37,7 @@ URL = 'http://papalote.cocoplan.mx/v0/'
 def osc_mensaje(m):
     ######OSCClient#########
     c = OSC.OSCClient()
-    c.connect(('127.0.0.1', 57120))   # localhost, port 57120
+    c.connect(('10.1.7.25',1221))   # localhost, port 57120
     oscmsg = OSC.OSCMessage()
     oscmsg.setAddress("/login")
     oscmsg.append(m)
