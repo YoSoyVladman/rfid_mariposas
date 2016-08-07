@@ -19,7 +19,7 @@ logger.setLevel(logging.DEBUG)
 
 # se definen los APDUs
 #
-COMMAND = [0xff, 0xCA, 0x00, 0x00, 0x00]
+COMMAND = [0xff, 0xCA, 0x00, 0x00, 0x04]
 
 ####### FACECANDY #######
 numLEDs = 100
