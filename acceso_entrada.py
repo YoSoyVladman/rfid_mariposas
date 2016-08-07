@@ -31,7 +31,7 @@ azul = [ (0,0,255) ] * numLEDs
 
 ####### ID DE LA EXPERIENCIA ########
 Z = 1
-E = 2
+E = 7
 URL = 'http://172.1.1.201/v0/'
 
 def osc_mensaje(m):
