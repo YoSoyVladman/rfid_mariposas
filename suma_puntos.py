@@ -18,7 +18,7 @@ logger.setLevel(logging.DEBUG)
 
 # se definen los APDUs
 #
-COMMAND = [0xff, 0xCA, 0x00, 0x00, 0x00]
+COMMAND = [0xff, 0xCA, 0x00, 0x00, 0x04]
 
 ####### FACECANDY #######
 numLEDs = 100
@@ -32,7 +32,7 @@ E = 26
 ##### PUNTOS #######
 P = 1
 ############
-URL = 'http://papalote.cocoplan.mx/v0/'
+URL = 'http://172.1.1.201/v0/'
 
 
 def encender_led():
