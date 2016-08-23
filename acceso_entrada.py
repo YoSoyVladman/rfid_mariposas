@@ -19,7 +19,7 @@ logger.setLevel(logging.DEBUG)
 
 # se definen los APDUs
 #
-COMMAND = [0xff, 0xCA, 0x00, 0x00, 0x00]
+COMMAND = [0xff, 0xCA, 0x00, 0x00, 0x04]
 
 ####### FACECANDY #######
 numLEDs = 100
@@ -31,13 +31,14 @@ azul = [ (0,0,255) ] * numLEDs
 
 ####### ID DE LA EXPERIENCIA ########
 Z = 1
-E = 2
-URL = 'http://papalote.cocoplan.mx/v0/'
+E = 7
+URL = 'http://172.1.1.201/v0/'
 
 def osc_mensaje(m):
+    print 'mensaje' + m
     ######OSCClient#########
     c = OSC.OSCClient()
-    c.connect(('10.1.7.25',1221))   # localhost, port 57120
+    c.connect(('172.1.1.211', 1221))   # localhost, port 57120
     oscmsg = OSC.OSCMessage()
     oscmsg.setAddress("/login")
     oscmsg.append(m)
@@ -63,7 +64,7 @@ def encender_azul():
     cliente.put_pixels(azul)
     time.sleep(.5)
     cliente.put_pixels(negro)
-    
+
 
 if __name__ == '__main__':
     r = readers()
@@ -124,6 +125,7 @@ if __name__ == '__main__':
                                 rv  = requests.get(URL + url_v, params = data_v)
                                 j = rv.json()
                                 url = j.get('url_perfil')
+				print url
                                 osc_mensaje(url)
                             except requests.ConnectionError as e:
                                 encender_azul()
