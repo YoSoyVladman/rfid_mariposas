@@ -30,7 +30,7 @@ azul = [ (0,0,255) ] * numLEDs
 ####### ID DE LA EXPERIENCIA ########
 Z = 3
 E = 4
-URL = 'http://papalote.cocoplan.mx/v0/'
+URL = 'http://172.1.1.201/v0/'
 
 def encender_led():
     cliente.put_pixels(negro)
